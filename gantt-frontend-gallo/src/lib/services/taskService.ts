@@ -65,7 +65,9 @@ interface StrapiTaskPayload {
     duration: number;
     progress: number;
     type: "project" | "task" | "subtask";
-    parent?: string | number;
+    parentTask?: {
+      connect: [{ id: string | number }];
+    };
   };
 }
 
@@ -106,7 +108,7 @@ export const transformGanttToStrapi = (task: GanttTask): StrapiTaskPayload => {
   };
 
   if (task.parent) {
-    payload.data.parent = task.parent;
+    payload.data.parentTask = { connect: [{ id: task.parent }] };
   }
 
   return payload;
@@ -132,11 +134,16 @@ export const createTask = async (task: GanttTask) => {
     throw error;
   }
 };
-
 export const updateTask = async (id: string | number, task: GanttTask) => {
   try {
+  
+    const documentId = await getDocumentIdFromId(id);
+    if (!documentId) {
+      throw new Error(`No se encontró el documentId para el id: ${id}`);
+    }
+    
     const strapiData = transformGanttToStrapi(task);
-    const response = await api.put(`/api/tasks/${id}`, strapiData);
+    const response = await api.put(`/api/tasks/${documentId}`, strapiData);
     return response.data;
   } catch (error) {
     console.error("Error updating task:", error);
@@ -144,12 +151,32 @@ export const updateTask = async (id: string | number, task: GanttTask) => {
   }
 };
 
+
+async function getDocumentIdFromId(id: string | number) {
+  try {
+    const response = await api.get(`/api/tasks?filters[id][$eq]=${id}`);
+    if (response.data.data && response.data.data.length > 0) {
+      return response.data.data[0].documentId;
+    }
+    return null;
+  } catch (error) {
+    console.error("Error getting documentId:", error);
+    return null;
+  }
+}
+
 export const deleteTask = async (id: string | number) => {
   try {
-    await api.delete(`/api/tasks/${id}`);
+   
+    const documentId = await getDocumentIdFromId(id);
+    if (!documentId) {
+      throw new Error(`No se encontró el documentId para el id: ${id}`);
+    }
+    await api.delete(`/api/tasks/${documentId}`);
     return true;
   } catch (error) {
     console.error("Error deleting task:", error);
     throw error;
   }
 };
+

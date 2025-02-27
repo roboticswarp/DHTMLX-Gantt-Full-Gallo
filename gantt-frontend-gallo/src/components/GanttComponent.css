@@ -1,0 +1,45 @@
+.gantt-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .gantt-container {
+    border: 1px solid #cecece;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .loading {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .error {
+    padding: 10px;
+    color: #e74c3c;
+    border-left: 3px solid #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+    margin: 10px 0;
+  }
