@@ -6,10 +6,8 @@
 2. Conecta tu cuenta de GitHub
 3. Importa tu repositorio de Strapi
 4. Configura variables de entorno:
-   - `DATABASE_URL`: URL de PostgreSQL
-   - `JWT_SECRET`: Clave secreta para JWT
-   - `ADMIN_JWT_SECRET`: Clave para panel admin
-   - `NODE_ENV`: production
+   - Puedes copiar y pegar las variables del .env y el contenido
+     de la base de datos de producción.
 
 ## 2. Despliegue de Frontend en Vercel
 
@@ -17,15 +15,9 @@
 2. Conecta tu cuenta de GitHub
 3. Importa tu repositorio de React
 4. Configura variables de entorno:
-   - `VITE_API_URL`: URL del backend desplegado en Railway
+   - Copia y pega las variables de tu .env y cambiar la url publica a produccion.
 
-## 3. Configuración de dominio personalizado (opcional)
-
-1. En Vercel, ve a Configuración del proyecto > Dominios
-2. Agrega tu dominio personalizado
-3. Configura los registros DNS según las instrucciones
-
-## 4. Conexión CI/CD con GitHub Actions
+## 3. Conexión CI/CD con GitHub Actions
 
 Los archivos de configuración ya están listos para:
 - Pruebas automáticas en cada push

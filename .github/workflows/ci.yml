@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, test-branch ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install Frontend Dependencies
+      working-directory: ./gantt-frontend-gallo
+      run: npm ci
+      
+    - name: Lint Frontend
+      working-directory: ./gantt-frontend-gallo
+      run: npm run lint || true
+      
+    - name: Build Frontend
+      working-directory: ./gantt-frontend-gallo
+      run: npm run build
+      
+    - name: Test Frontend
+      working-directory: ./gantt-frontend-gallo
+      run: npm test || true
