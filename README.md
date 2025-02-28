@@ -21,5 +21,4 @@
 
 Los archivos de configuración ya están listos para:
 - Pruebas automáticas en cada push
-- Despliegue automático en merge a main
 - Verificación de linting y errores
